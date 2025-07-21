@@ -1,0 +1,2158 @@
+{
+  "name": "Email Automation 2 copy copy",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 12,
+              "triggerAtMinute": 33
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1248,
+        528
+      ],
+      "id": "25510fe8-f5bc-43a4-b507-1e0b124936a3",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        528
+      ],
+      "id": "7e1a5d1c-1019-4cdd-b3ee-ae278e71fed4",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json[\"pdfPath\"] }}",
+        "options": {
+          "dataPropertyName": "=attachment"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1632,
+        176
+      ],
+      "id": "847f6c70-8d11-4c4a-a837-49256f1114af",
+      "name": "Read/Write Files from Disk1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "85c713ec-7645-4e2d-b66c-d99447a8acca",
+              "leftValue": "={{$json[\"id\"]}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2512,
+        48
+      ],
+      "id": "e5cfe784-f07b-4193-9fcf-0fac865c29fc",
+      "name": "If1",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2288,
+        48
+      ],
+      "id": "d8cc89f3-d976-4266-81a4-76d414488883",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3392,
+        -64
+      ],
+      "id": "e573f06f-dc0e-4a55-996f-00055c6435c4",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "joinMode": "keepEverything",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3600,
+        -128
+      ],
+      "id": "2783001c-9afb-48e4-b686-55494a0e26de",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3168,
+        -128
+      ],
+      "id": "9c16454c-a400-4396-b3f8-415f61654ac7",
+      "name": "Merge5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        960,
+        48
+      ],
+      "id": "809a66fb-a24a-435f-adf0-1daac522e13d",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2720,
+        -160
+      ],
+      "id": "3c83e2ef-fa8d-4044-9117-4f3b048e256a",
+      "name": "Merge6"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2720,
+        272
+      ],
+      "id": "3a55c381-de25-470f-a85e-30d49c1f9c53",
+      "name": "Merge7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c26d820b-2bad-4697-ab04-93d7d0e73bb6",
+              "name": "First Email Status",
+              "value": "={{ \"Sent on \" + new Date().toLocaleDateString(\"it-IT\") + \" at \" + new Date().toLocaleTimeString(\"it-IT\", { hour: '2-digit', minute: '2-digit' }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "fileSize, fileExtension, directory, fileName, fileType, mimeType, pdfPath, labelIds, threadId, id, equalCheck, targetDateTrimmed, convertedDateTrimmed, targetDateRaw, convertedDateRaw, targetDate, convertedDate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2944,
+        -160
+      ],
+      "id": "87581535-b7de-4753-9c75-88edc298751f",
+      "name": "Column filler for the first Email"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "02c48d13-e4dc-4410-9514-9782aa6238b8",
+              "name": "Second Email Status",
+              "value": "={{ \"Sent on \" + new Date().toLocaleDateString(\"it-IT\") + \" at \" + new Date().toLocaleTimeString(\"it-IT\", { hour: '2-digit', minute: '2-digit' }) }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "fileSize, fileExtension, directory, fileName, fileType, mimeType, pdfPath, labelIds, threadId, id, equalCheck, targetDateTrimmed, convertedDateTrimmed, targetDateRaw, convertedDateRaw, targetDate, convertedDate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2944,
+        272
+      ],
+      "id": "3a2bc32f-4883-4cfa-b67d-6834da5fdd36",
+      "name": "Column filler for the Second Email"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0099ea6e-13cc-48c2-b6e8-b6d00d0c042e",
+              "name": "Status",
+              "value": "not sent\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3168,
+        96
+      ],
+      "id": "a5eab423-5cbf-4944-b1d1-c93d0cf86d8d",
+      "name": "Error manager"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0e8e70cf-19c5-4e82-8e37-508989b9dc65",
+              "name": "=Scadenza Azienda",
+              "value": "={{ new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).getFullYear() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -576,
+        1104
+      ],
+      "id": "6f3cfa91-8f9e-43bd-82b0-126f96ae74be",
+      "name": "Year Extractor"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8e93d3f2-4150-4316-a493-923669ef4949",
+              "leftValue": "={{ $json['Scadenza Azienda'] }}",
+              "rightValue": "={{ new Date().getFullYear() }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -368,
+        1104
+      ],
+      "id": "2e51a2ef-540d-457b-b57d-c3a4d1b47c9d",
+      "name": "Year checker"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "58cbd730-5575-4561-878d-f3c7373c50c9",
+              "leftValue": "={{ $json.equalCheck }}",
+              "rightValue": "={{ $json.equalCheck }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        752,
+        -160
+      ],
+      "id": "66c56640-3c74-49f6-81d4-051c7b7fe66c",
+      "name": "Firts maintanace email",
+      "alwaysOutputData": false,
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "39b166d0-4d89-40e4-af60-7cf57fa59de9",
+              "leftValue": "={{ new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).toISOString().slice(5, 10) }}\n",
+              "rightValue": "={{ (() => { const d = new Date(); d.setMonth(d.getMonth() + 1); return d.toISOString().slice(5, 10); })() }}\n",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        752,
+        272
+      ],
+      "id": "7631748e-ed65-4841-9fec-f7812050d989",
+      "name": "Second maintanace email"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a154dfae-8be3-4d64-815b-4a14a1731261",
+              "leftValue": "={{ $json.equalCheck }}",
+              "rightValue": "={{ (() => { const d = new Date(); d.setMonth(d.getMonth() + 2); return d.toISOString().slice(5, 10); })() }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        752,
+        768
+      ],
+      "id": "c3045ce0-cf0e-4388-8eaf-f49e28a33fcc",
+      "name": "first re-certificate email"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "67884127-9bf6-4484-9008-60502c31d492",
+              "leftValue": "={{ new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).toISOString().slice(5, 10) }}",
+              "rightValue": "={{ (() => { const d = new Date(); d.setMonth(d.getMonth() + 1); return d.toISOString().slice(5, 10); })() }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        752,
+        1216
+      ],
+      "id": "65d50593-ea81-4012-bfe9-3fc99c1cdd06",
+      "name": "second re-certificate email"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        960,
+        976
+      ],
+      "id": "5d5c5ab4-23ed-4708-9d0b-fc6c3e89d84b",
+      "name": "Merge8"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "outputDataFrom": "input1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "bc8f3147-6a3d-412c-a954-1cb789cb9eb5",
+      "name": "Merge9"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -144,
+        1024
+      ],
+      "id": "4fa63a3d-2218-4d98-ad87-c7a3acd8ba73",
+      "name": "Merge10"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "90c3eb0b-6688-4309-bf39-163a8e92d270",
+              "leftValue": "={{ $json['Renewal Confirmed'] && $json['Renewal Confirmed'].toLowerCase().trim() === \"no\" }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        272
+      ],
+      "id": "3dfd4a44-8bce-46f6-b006-bf1a206a6d4f",
+      "name": "confirmation checker"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "90c3eb0b-6688-4309-bf39-163a8e92d270",
+              "leftValue": "={{ $json['Renewal Confirmed'] && $json['Renewal Confirmed'].toLowerCase().trim() === \"no\" }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        1216
+      ],
+      "id": "b8a92aad-c0af-490c-9eb6-d044375cdca7",
+      "name": "confirmation checker1"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.pdfPath }}",
+        "options": {
+          "dataPropertyName": "=attachment"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        1120
+      ],
+      "id": "1cf8a89d-5d50-41fa-b260-a159dfa380e5",
+      "name": "Read/Write Files from Disk3",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2288,
+        976
+      ],
+      "id": "18e6d9b3-f2df-4a50-a5f1-fccfb76d5164",
+      "name": "Merge11"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2944,
+        976
+      ],
+      "id": "24b0ec6b-9fe1-4387-843e-b19c1152322d",
+      "name": "Merge12"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "85c713ec-7645-4e2d-b66c-d99447a8acca",
+              "leftValue": "={{$json[\"id\"]}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3168,
+        976
+      ],
+      "id": "82f594d1-99b0-42b9-a30f-13dd811919a2",
+      "name": "If",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3392,
+        976
+      ],
+      "id": "b4ba6c84-8f2e-45d1-9667-4fae282985c7",
+      "name": "Merge13"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3392,
+        768
+      ],
+      "id": "a75bd4ec-a02b-47a6-9f10-119f1859ef17",
+      "name": "Merge14"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3824,
+        848
+      ],
+      "id": "b31dcb5d-2b90-45b5-85f3-6a392469cbe9",
+      "name": "Merge15"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0099ea6e-13cc-48c2-b6e8-b6d00d0c042e",
+              "name": "Status",
+              "value": "not sent\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3824,
+        1168
+      ],
+      "id": "abcd3480-7c51-4623-83a4-c28481dfb55e",
+      "name": "Error manager1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4048,
+        944
+      ],
+      "id": "5970fe88-b8d1-4241-8a9c-f77526c102b7",
+      "name": "Merge16"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "joinMode": "keepEverything",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4272,
+        880
+      ],
+      "id": "3d9b33dc-c9d2-45e3-bcc8-60ce3070976b",
+      "name": "Merge17"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "joinMode": "keepEverything",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4480,
+        -128
+      ],
+      "id": "90f470ae-868e-4409-b6a1-df34b9cf6438",
+      "name": "Merge18"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "ID",
+        "joinMode": "enrichInput1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4704,
+        80
+      ],
+      "id": "35bccc2a-f696-4cce-abd8-56f28040c36a",
+      "name": "Merge19"
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        4928,
+        80
+      ],
+      "id": "7e01fddb-2935-4932-bc7b-969e000c84ef",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/Users/sepehr/Desktop/Intern/Test.xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        5152,
+        80
+      ],
+      "id": "1f835f89-1c88-4c74-a1e0-19981240115f",
+      "name": "Read/Write Files from Disk2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1840,
+        48
+      ],
+      "id": "e7cb9b99-38b1-4e7d-ba7f-180d43dc5d3b",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3346a7be-e655-41ea-bcdc-34a51cbb8b4e",
+              "name": "convertedDate",
+              "value": "={{ String(new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).toISOString().slice(5, 10)).trim() }}\n",
+              "type": "string"
+            },
+            {
+              "id": "aa0c5528-846a-40fa-9aae-4a717d108e99",
+              "name": "targetDate",
+              "value": "={{ (() => { \n  const d = new Date(); \n  d.setMonth(d.getMonth() + 2); \n  return String(d.toISOString().slice(5, 10)).trim(); \n})() }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        -160
+      ],
+      "id": "bba61b27-0bf6-42b8-8a56-c126297e6846",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "73b46894-3951-48ee-8a39-9f222ec6ffd1",
+              "name": "convertedDateRaw",
+              "value": "={{ $json[\"convertedDate\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "93cbec6e-4f88-42d7-b88c-76dea26bc32f",
+              "name": "targetDateRaw",
+              "value": "={{ $json[\"targetDate\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "5f0c811f-d5fb-4f12-b4fa-abcc83bf864c",
+              "name": "convertedDateTrimmed",
+              "value": "={{ String($json[\"convertedDate\"]).trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "9cb2ea16-9214-4883-9df8-faad51eff93d",
+              "name": "targetDateTrimmed",
+              "value": "={{ String($json[\"targetDate\"]).trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "ee19048c-544f-44a3-b724-48fa3ca1831b",
+              "name": "equalCheck",
+              "value": "={{ String($json[\"convertedDate\"]).trim() === String($json[\"targetDate\"]).trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        -160
+      ],
+      "id": "b0f419e3-4ce3-48b0-9b25-a6db1cedee6c",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3346a7be-e655-41ea-bcdc-34a51cbb8b4e",
+              "name": "convertedDate",
+              "value": "={{ String(new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).toISOString().slice(5, 10)).trim() }}\n",
+              "type": "string"
+            },
+            {
+              "id": "aa0c5528-846a-40fa-9aae-4a717d108e99",
+              "name": "targetDate",
+              "value": "={{ (() => { \n  const d = new Date(); \n  d.setMonth(d.getMonth() + 2); \n  return String(d.toISOString().slice(5, 10)).trim(); \n})() }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        272
+      ],
+      "id": "77545678-b572-4df9-a70f-c37849460460",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "73b46894-3951-48ee-8a39-9f222ec6ffd1",
+              "name": "convertedDateRaw",
+              "value": "={{ $json[\"convertedDate\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "93cbec6e-4f88-42d7-b88c-76dea26bc32f",
+              "name": "targetDateRaw",
+              "value": "={{ $json[\"targetDate\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "5f0c811f-d5fb-4f12-b4fa-abcc83bf864c",
+              "name": "convertedDateTrimmed",
+              "value": "={{ String($json[\"convertedDate\"]).trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "9cb2ea16-9214-4883-9df8-faad51eff93d",
+              "name": "targetDateTrimmed",
+              "value": "={{ String($json[\"targetDate\"]).trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "ee19048c-544f-44a3-b724-48fa3ca1831b",
+              "name": "equalCheck",
+              "value": "={{ String($json[\"convertedDate\"]).trim() === String($json[\"targetDate\"]).trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        272
+      ],
+      "id": "7d8f3c78-c4d5-4da0-913e-6f370a67cecc",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3346a7be-e655-41ea-bcdc-34a51cbb8b4e",
+              "name": "convertedDate",
+              "value": "={{ String(new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).toISOString().slice(5, 10)).trim() }}\n",
+              "type": "string"
+            },
+            {
+              "id": "aa0c5528-846a-40fa-9aae-4a717d108e99",
+              "name": "targetDate",
+              "value": "={{ (() => { \n  const d = new Date(); \n  d.setMonth(d.getMonth() + 2); \n  return String(d.toISOString().slice(5, 10)).trim(); \n})() }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        768
+      ],
+      "id": "5acb329d-e6a0-442a-9876-585659f0d67c",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "73b46894-3951-48ee-8a39-9f222ec6ffd1",
+              "name": "convertedDateRaw",
+              "value": "={{ $json[\"convertedDate\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "93cbec6e-4f88-42d7-b88c-76dea26bc32f",
+              "name": "targetDateRaw",
+              "value": "={{ $json[\"targetDate\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "5f0c811f-d5fb-4f12-b4fa-abcc83bf864c",
+              "name": "convertedDateTrimmed",
+              "value": "={{ String($json[\"convertedDate\"]).trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "9cb2ea16-9214-4883-9df8-faad51eff93d",
+              "name": "targetDateTrimmed",
+              "value": "={{ String($json[\"targetDate\"]).trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "ee19048c-544f-44a3-b724-48fa3ca1831b",
+              "name": "equalCheck",
+              "value": "={{ String($json[\"convertedDate\"]).trim() === String($json[\"targetDate\"]).trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        768
+      ],
+      "id": "aedf3f97-62f1-4f2f-81e3-702751d508d3",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3346a7be-e655-41ea-bcdc-34a51cbb8b4e",
+              "name": "convertedDate",
+              "value": "={{ String(new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).toISOString().slice(5, 10)).trim() }}\n",
+              "type": "string"
+            },
+            {
+              "id": "aa0c5528-846a-40fa-9aae-4a717d108e99",
+              "name": "targetDate",
+              "value": "={{ (() => { \n  const d = new Date(); \n  d.setMonth(d.getMonth() + 2); \n  return String(d.toISOString().slice(5, 10)).trim(); \n})() }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        1216
+      ],
+      "id": "40ed7022-bc2c-446c-a62f-359da918301e",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "73b46894-3951-48ee-8a39-9f222ec6ffd1",
+              "name": "convertedDateRaw",
+              "value": "={{ $json[\"convertedDate\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "93cbec6e-4f88-42d7-b88c-76dea26bc32f",
+              "name": "targetDateRaw",
+              "value": "={{ $json[\"targetDate\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "5f0c811f-d5fb-4f12-b4fa-abcc83bf864c",
+              "name": "convertedDateTrimmed",
+              "value": "={{ String($json[\"convertedDate\"]).trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "9cb2ea16-9214-4883-9df8-faad51eff93d",
+              "name": "targetDateTrimmed",
+              "value": "={{ String($json[\"targetDate\"]).trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "ee19048c-544f-44a3-b724-48fa3ca1831b",
+              "name": "equalCheck",
+              "value": "={{ String($json[\"convertedDate\"]).trim() === String($json[\"targetDate\"]).trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        1216
+      ],
+      "id": "eaf7cfd8-cc66-44d2-8e90-9954e09c1566",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c26d820b-2bad-4697-ab04-93d7d0e73bb6",
+              "name": "First Email Status",
+              "value": "={{ \"Sent on \" + new Date().toLocaleDateString(\"it-IT\") + \" at \" + new Date().toLocaleTimeString(\"it-IT\", { hour: '2-digit', minute: '2-digit' }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "fileSize, fileExtension, directory, fileName, fileType, mimeType, pdfPath, labelIds, threadId, id, equalCheck, targetDateTrimmed, convertedDateTrimmed, targetDateRaw, convertedDateRaw, targetDate, convertedDate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3600,
+        768
+      ],
+      "id": "f0d32267-ea9c-4b31-9bde-736855cdfef2",
+      "name": "Column filler for the first Email1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "02c48d13-e4dc-4410-9514-9782aa6238b8",
+              "name": "Second Email Status",
+              "value": "={{ \"Sent on \" + new Date().toLocaleDateString(\"it-IT\") + \" at \" + new Date().toLocaleTimeString(\"it-IT\", { hour: '2-digit', minute: '2-digit' }) }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "fileSize, fileExtension, directory, fileName, fileType, mimeType, pdfPath, labelIds, threadId, id, equalCheck, targetDateTrimmed, convertedDateTrimmed, targetDateRaw, convertedDateRaw, targetDate, convertedDate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3600,
+        976
+      ],
+      "id": "5518ca74-4e94-4f54-b38a-b8b0c1cdbaf3",
+      "name": "Column filler for the Second Email2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const basePath = \"/Users/sepehr/Desktop/Intern/re-certificate/\";\nconst staticAttachments = [\n  `${basePath}RINA_Dichiarazione Fatturato Fgas.pdf`,\n  `${basePath}RINA_MODULO PAT MANT.pdf`,\n  `${basePath}RINA_MEMBER AREA -10-2023.pdf`,\n  `${basePath}RINA_Estratto PRIVACY FORM-SYS01-.pdf`\n];\n\nreturn items.map(item => {\n  // ⬇️  case-insensitive\n  const enteRaw = item.json[\"ENTE\"];\n  const ente     = enteRaw ? enteRaw.trim().toLowerCase() : \"\";\n\n  const attachments = [...staticAttachments];\n\n  // ⬇️  compare in lower-case\n  if (ente.startsWith(\"rina\")) {\n    // still build the file-name in upper-case (your originals are)\n    attachments.push(`${basePath}${ente.toUpperCase()}.pdf`);\n  }\n\n  return {\n    json: {\n      ...item.json,\n      pdfPaths: attachments,\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1408,
+        1120
+      ],
+      "id": "a60acb58-83e1-432b-820a-f4040ecdfa33",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "const pdfPaths = $json[\"pdfPaths\"];\nconst enteRaw  = $json[\"ENTE\"];\nconst ente     = enteRaw ? enteRaw.trim().toLowerCase() : \"\";\n\nlet items = pdfPaths.map(path => ({\n  json: { pdfPath: path.trim() }\n}));\n\n// ⬇️  match with lower-case\n//if (ente === \"rina01\") {\n // items.push({\n    //json: {\n  //    pdfPath: \"/Users/sepehr/Desktop/Intern/re-certificate/RINA01.pdf\"\n   // }\n  //});\n//}\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1632,
+        1120
+      ],
+      "id": "87fefb98-bcea-40b5-9be9-d392cc969321",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "jsCode": "/****************************************************************\n * Code2 — gather every attachment that reaches this node       *\n * Compatible with BOTH execution modes.                        *\n ****************************************************************/\n\n// -------- helper: collect the incoming items safely ----------\nconst rows = typeof items !== \"undefined\"\n  ? items                     // node set to “Run Once for All Items”\n  : typeof item !== \"undefined\"\n    ? $input.all()            // node set to per-item fan-in\n    : $input.all();           // fallback (rare)\n\n// -------- build the binary object ----------------------------\nconst binary = {};\n\nrows.forEach((r, idx) => {\n  if (r.binary && r.binary.attachment) {\n    binary[`attachment${idx + 1}`] = r.binary.attachment;\n  }\n});\n\n// -------- carry forward the first row’s JSON (optional) -------\nconst baseJson = rows.length && rows[0].json ? { ...rows[0].json } : {};\n\n// -------- output single item with all binaries ---------------\nreturn [\n  {\n    json: baseJson,\n    binary,\n  },\n];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2064,
+        1120
+      ],
+      "id": "7c2bae08-300d-4bfc-9117-ef805ae5774c",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "63622c7a-9726-4c5b-a82f-1468cef82173",
+              "name": "pdfPath",
+              "value": "[   \"/Users/sepehr/Desktop/Intern/re-certificate/RINA01.pdf\",   \"/Users/sepehr/Desktop/Intern/re-certificate/RINA_MODULO PAT MANT.pdf\",   \"/Users/sepehr/Desktop/Intern/re-certificate/RINA_MEMBER AREA -10-2023.pdf\",   \"/Users/sepehr/Desktop/Intern/re-certificate/RINA_Estratto PRIVACY FORM-SYS01-.pdf\",   \"/Users/sepehr/Desktop/Intern/re-certificate/RINA_Dichiarazione Fatturato Fgas.pdf\" ]",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        976
+      ],
+      "id": "a913d2a6-6081-4448-b8e9-9ff752114741",
+      "name": "Attach_path"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0eb87a81-782b-4d37-9a39-55925a101f91",
+              "name": "pdfPath",
+              "value": "=/Users/sepehr/Desktop/Intern/Certificati/FORM-FGAS-VERIFICA DOCUMENTALE.pdf\n\n\n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        48
+      ],
+      "id": "5b722f63-77f6-4e4c-a208-49f9acd39901",
+      "name": "Attach_path1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "fileSelector": "/Users/sepehr/Desktop/Intern/Test.xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        528
+      ],
+      "id": "35025658-fa11-4df9-b68b-74c5d85dc479",
+      "name": "DATABASE path"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  item.json.pdfPath = item.json.pdfPath.trim();\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1408,
+        176
+      ],
+      "id": "15386ee1-97e3-4f5c-a4d4-4e256825a6e1",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "Re-certificate Email",
+        "message": "=<p>Spett.le impresa <strong>{{ $json['SocietÃ '] }} </strong>,</p>\n\n<p>In vista della scadenza quinquennale del certificato F-gas, prevista per il <strong>{{ new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).toLocaleDateString(\"it-IT\", { day: \"2-digit\", month: \"2-digit\", year: \"numeric\" }) }}</strong>, come da contratto <strong>{{ $json[\"Num. Contratto Smart\"] }}</strong>, si ricordano le attività da compiere ai fini della ri-certificazione F-gas:</p>\n\n<p>→ <a href=\"{{ $json['Link Portale F-gas'] }}\">LINK F-GAS</a></p>\n\n\n<p>Si segnala che superati i termini di scadenza prevista, essendo una ri-certificazione quinquennale, il vs. certificato non sarà più attivo in banca dati F-gas, rendendo impossibile effettuare comunicazioni dal <strong>{{ new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000).toLocaleDateString(\"it-IT\", { day: \"2-digit\", month: \"2-digit\", year: \"numeric\" }) }}</strong>.</p>\n\n<ul>\n  <li>Strumentazione da verificare, come indicato nell’All. B del PGA</li>\n  <li>Contattare Smart Srl per ricevere dettaglio della strumentazione da verificare nell’anno corrente: <strong>011-8006446</strong></li>\n  <li>In caso di incarico a Smart della preparazione documentale, inviare:\n    <ul>\n      <li>Contratto Rina compilato, firmato e timbrato (in allegato)</li>\n      <li>Allegati Rina compilati, firmati, timbrati</li>\n      <li>Quota Rina: €250,00 + IVA (impresa individuale), €330,00 + IVA + trasferta (impresa non individuale)</li>\n      <li>Visura camerale aggiornata</li>\n      <li>Elenco interventi dichiarati in banca dati F-gas</li>\n      <li>1 copia intervento dichiarato</li>\n    </ul>\n  </li>\n</ul>\n\n<p>📅 Verifica immediata: contattare il <strong>324-8082383</strong> per appuntamento. Altrimenti, strumenti ritirabili dopo 48h dalla consegna.</p>\n\n<p><strong>Pagamento</strong>: entro o contestualmente al ritiro della strumentazione.</p>\n\n<p>ℹ️ Chi aderisce a EBAP può richiedere un rimborso. Info: <a href=\"https://www.ebap.piemonte.it/prestazioni-imprese2024/\">EBAP Prestazioni 2024</a></p>\n\n<p>Cordiali saluti,<br>ST & T Srl</p>\n\n<br>\n<img src=\"https://i.postimg.cc/6QPpZTtc/pic1.jpg\" alt=\"Smart logo\" style=\"max-width: 300px;\" />\n\n\n\n\n\n<!-- Legal Notice -->\n<hr>\n<p><strong>AVVERTENZE AI SENSI DEL DLGS 196/2003:</strong><br>\nLe informazioni contenute in questo messaggio di posta elettronica e/o nei file allegati sono da considerarsi strettamente riservate. Il loro utilizzo è consentito esclusivamente al destinatario del messaggio, per le finalità indicate nel messaggio stesso. Qualora riceveste questo messaggio senza esserne il destinatario, vi preghiamo di darcene notizia via email e di procedere alla distruzione del messaggio stesso. È vietato trattenerlo, divulgarlo anche in parte, copiarlo o utilizzarlo per finalità diverse.</p>\n\n<p><strong>PRIVACY DISCLAIMER:</strong><br>\nUnless otherwise expressly stated, the information contained in this email is highly confidential and is intended only for the attention or use of the recipient named above. If you are not the intended recipient please inform the sender as soon as possible by email and delete the email and any attachment from your system. Any use, disclosure or copying of the present email other than as authorized by us is prohibited.</p>\n",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "={{ $json.gmailAttachments ? $json.gmailAttachments.map(a => a.property).join(',') : '' }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2720,
+        880
+      ],
+      "id": "2b2e9f91-7e01-4179-91f2-50eba9a62650",
+      "name": "Send a message",
+      "webhookId": "4036ecb4-8e82-40e1-8ca1-44dc8676a2b6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TW3WHF3mGzEs8A85",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "Maintanance Email",
+        "message": "=<p>Spett.le <strong> {{ $json['SocietÃ '] }}  </strong>,</p>\n\n<p>Gemt.m <strong>{{ $json[\"Nome\"] }} {{ $json[\"Cognome\"] }}</strong>,</p>\n\n<p>\nIn vista della scadenza annuale per il mantenimento certificato impresa F-GAS, prevista per il <strong><strong>{{\n  (() => {\n    const originalDate = new Date(($json[\"Scadenza Azienda\"] - 25569) * 86400000);\n    const day = String(originalDate.getDate()).padStart(2, '0');\n    const month = String(originalDate.getMonth() + 1).padStart(2, '0');\n    const currentYear = new Date().getFullYear();\n    return `${day}/${month}/${currentYear}`;\n  })()\n}}</strong></strong>, come da contratto n. <strong>{{ $json[\"Num. Contratto Smart\"] }}</strong>, si ricordano le attività da compiere ai fini del mantenimento certificato F-GAS:\n</p>\n\n<p>→ <a href=\"{{ $json['Link Portale F-gas'] }}\">LINK F-GAS</a></p>\n\n<p><strong>Strumentazione da verificare:</strong></p>\n<ul>\n  <li>Cercafughe elettronico</li>\n  <li>Gruppo manometrico</li>\n</ul>\n\n<p><strong>Ai fini della preparazione documentazione, inviare:</strong></p>\n<ul>\n  <li>Modulo dell'ente certificatore debitamente compilato, firmato e timbrato</li>\n  <li>Visura camerale aggiornata alla data dell'invio</li>\n  <li>Elenco interventi dichiarati in banca dati F-GAS</li>\n  <li>1 copia intervento dichiarato in banca dati F-GAS</li>\n  <li>Quota Rina annua, importo € 120,00 + IVA 22% - <strong>TOTALE € 146.40<strong>  (previo vs. verifica dell'importo in base a contratto, numero di personale certificato F-GAS e mail dell'ente)</li>\n</ul>\n\n{{ $json[\"ENTE\"] === \"RINA\" ? `\n<p>\n<strong>Beneficiario:</strong><br>\nRINA SERVICES S.P.A.<br>\nIBAN: IT 23 S 05696 01400 000001793X43<br>\n(BANCA POPOLARE DI SONDRIO - VIA XXV APRILE, 7 - 16123 GENOVA)<br>\nImporto: 120.00 € + IVA 22% – TOTALE € 146.40<br>\nCausale: Mant Imp Fgas 2024 ${$json[\"Nome Azienda\"]}\n</p>\n` : `` }}\n\n<p><em>N.B.: Gli importi relativi all'attività svolta da Smart fanno riferimento al contratto di cui sopra.</em></p>\n\n<p>\nSi chiede cortesemente di contattare il <strong>324-8082383</strong> per appuntamento consegna strumentazione.\n</p>\n\n<p>\n<strong>Modalità di pagamento:</strong><br>\nEntro o contestualmente al ritiro della strumentazione, sia in caso di verifica immediata che con ritiro posteriore alla consegna.\n</p>\n\n<p><strong>TUTTA LA DOCUMENTAZIONE RICHIESTA DOVRA' PERVENIRE IN UN'UNICA MAIL.</strong></p>\n\n<p style=\"color: red;\"><strong>NON SARANNO PRESE IN CONSIDERAZIONE (E DI CONSEGUENZA TRASMESSE ALL'ENTE ACCREDITANTE) EMAIL CON DOCUMENTAZIONE PARZIALE, NON IDONEA O NON DEBITAMENTE COMPILATA.</strong></p>\n\n<p style=\"color: red;\"><strong>CIO' COMPORTEREBBE IL RISCHIO DI SOSPENSIONE ED EVENTUALE REVOCA DI TALE CERTIFICAZIONE DA PARTE DELL'ENTE ACCREDITANTE.</strong></p>\n\n<p>Cordiali saluti,<br><br><strong>ST&T srl</strong></p>\n\n<img src=\"https://i.postimg.cc/6QPpZTtc/pic1.jpg\" alt=\"Smart logo\" style=\"max-width: 300px;\" />\n\n<!-- Legal Notice -->\n<hr>\n<p><strong>AVVERTENZE AI SENSI DEL DLGS 196/2003:</strong><br>\nLe informazioni contenute in questo messaggio di posta elettronica e/o nei file allegati sono da considerarsi strettamente riservate. Il loro utilizzo è consentito esclusivamente al destinatario del messaggio, per le finalità indicate nel messaggio stesso. Qualora riceveste questo messaggio senza esserne il destinatario, vi preghiamo di darcene notizia via email e di procedere alla distruzione del messaggio stesso. È vietato trattenerlo, divulgarlo anche in parte, copiarlo o utilizzarlo per finalità diverse.</p>\n\n<p><strong>PRIVACY DISCLAIMER:</strong><br>\nUnless otherwise expressly stated, the information contained in this email is highly confidential and is intended only for the attention or use of the recipient named above. If you are not the intended recipient please inform the sender as soon as possible by email and delete the email and any attachment from your system. Any use, disclosure or copying of the present email other than as authorized by us is prohibited.</p>\n",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "attachment"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2064,
+        176
+      ],
+      "id": "eed6a65e-9d5a-4df2-80cb-89a8d4907234",
+      "name": "Send a message1",
+      "webhookId": "29807d01-e7d6-4179-abb4-e69a7fee4883",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TW3WHF3mGzEs8A85",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const attachments = [];\nconst binary = {};\n\nfor (const [index, item] of items.entries()) {\n  // Copy each binary field to the final binary output\n  for (const [key, data] of Object.entries(item.binary || {})) {\n    binary[key] = data;\n\n    if (key.startsWith('attachment')) {\n      attachments.push({\n        property: key,\n        fileName: data.fileName || `${key}.pdf`,\n      });\n    }\n  }\n}\n\n// Return a single item with all attachments and full binary data\nreturn [\n  {\n    json: {\n      ...items[0].json,\n      gmailAttachments: attachments,\n    },\n    binary,\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2512,
+        880
+      ],
+      "id": "994eaad8-cd9c-4b32-9aba-8d089ef9b6e1",
+      "name": "Code4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "DATABASE path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Year Extractor",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge19",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Merge18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge5": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "Attach_path1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge6": {
+      "main": [
+        [
+          {
+            "node": "Column filler for the first Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge7": {
+      "main": [
+        [
+          {
+            "node": "Column filler for the Second Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Column filler for the first Email": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Column filler for the Second Email": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Error manager": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Year Extractor": {
+      "main": [
+        [
+          {
+            "node": "Year checker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Year checker": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firts maintanace email": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Second maintanace email": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "first re-certificate email": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge14",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "second re-certificate email": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge13",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge8": {
+      "main": [
+        [
+          {
+            "node": "Attach_path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge9": {
+      "main": [
+        [
+          {
+            "node": "confirmation checker",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge10": {
+      "main": [
+        [
+          {
+            "node": "confirmation checker1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "confirmation checker": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "confirmation checker1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk3": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge11": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge12": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Merge13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge14",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Error manager1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge14": {
+      "main": [
+        [
+          {
+            "node": "Column filler for the first Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge13": {
+      "main": [
+        [
+          {
+            "node": "Column filler for the Second Email2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge15": {
+      "main": [
+        [
+          {
+            "node": "Merge16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error manager1": {
+      "main": [
+        [
+          {
+            "node": "Merge16",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge16": {
+      "main": [
+        [
+          {
+            "node": "Merge17",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge17": {
+      "main": [
+        [
+          {
+            "node": "Merge18",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge18": {
+      "main": [
+        [
+          {
+            "node": "Merge19",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge19": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk2": {
+      "main": [
+        []
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Firts maintanace email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Second maintanace email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "first re-certificate email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "second re-certificate email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Column filler for the first Email1": {
+      "main": [
+        [
+          {
+            "node": "Merge15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Column filler for the Second Email2": {
+      "main": [
+        [
+          {
+            "node": "Merge15",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Attach_path": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach_path1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DATABASE path": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c880107c-ca42-4a1b-a627-00475ac813a7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9fbbb59e55a9a730e0bd09b55ca482305cdd5e13fcd704882e7bad74f8c69d0c"
+  },
+  "id": "yDDaMVnWYIxhiOlb",
+  "tags": [
+    {
+      "createdAt": "2025-07-10T12:54:11.724Z",
+      "updatedAt": "2025-07-10T12:54:11.724Z",
+      "id": "R3dcDN2FHp5jNZoX",
+      "name": "final?"
+    }
+  ]
+}
